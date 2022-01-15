@@ -10,7 +10,8 @@
       <p class="card-text">
           {{items.itemDescription}}
       </p>
-      
+      <a href="#" class="btn btn-danger mx-1">Delete</a>
+      <a href="#" class="btn btn-warning mx-1">Edit</a>
     </div>
   </div>
   <!-- <p>{{database}}</p> -->
