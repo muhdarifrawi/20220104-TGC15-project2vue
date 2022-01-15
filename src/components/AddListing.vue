@@ -38,7 +38,12 @@
     </div>
 
     <div class="form-floating mb-2">
-      <select class="form-select" id="category" aria-label="category label" v-model="category">
+      <select
+        class="form-select"
+        id="category"
+        aria-label="category label"
+        v-model="category"
+      >
         <option selected>Choose a category</option>
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -57,42 +62,53 @@
       <label for="item-description">Item Description</label>
     </div>
 
-    <button type="button" class="btn btn-primary" v-on:click="newProduct">Submit</button>
+    <button type="button" class="btn btn-primary" v-on:click="processAdd">
+      Submit
+    </button>
   </div>
-
-  
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "AddListing",
-  data:function(){
-      return{
-          date:"",
-          user:"",
-          itemName:"",
-          category:"",
-          itemDescription:""
-      }
+  data: function () {
+    return {
+      date: "",
+      user: "",
+      itemName: "",
+      category: [],
+      itemDescription: "",
+    };
   },
-  methods:{
-      "newProduct": function(){
-        let date = this.date;
-        let user = this.user;
-        let itemName = this.itemName;
-        let category = this.category;
-        let itemDescription = this.itemDescription
+  methods: {
+    newProduct: function () {
+      let date = this.date;
+      let user = this.user;
+      let itemName = this.itemName;
+      let category = this.category;
+      let itemDescription = this.itemDescription;
 
-        console.log(date,user,itemName, category, itemDescription);
-      }
-  }
+      console.log(date, user, itemName, category, itemDescription);
+    },
+    processAdd: async function () {
+      console.log("mongo url: " + process.env.VUE_APP_DEV_MONGO_URL);
+      let response = await axios.post(process.env.VUE_APP_DEV_MONGO_URL + "products", {
+        date:this.date,
+        user:this.user,
+        itemName:this.itemName,
+        category:this.category,
+        itemDescription:this.itemDescription
+      });
+      console.log(response.data);
+    },
+  },
 };
 </script>
 
 <style>
 #item-description {
   height: 150px;
-  resize:none;
+  resize: none;
 }
-
 </style>
