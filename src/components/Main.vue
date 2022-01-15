@@ -1,5 +1,8 @@
 <template>
-    <p>{{database}}</p>
+    <div v-for="items in database" :key="items.itemName">
+        {{items.itemName}}
+    </div>
+    <!-- <p>{{database}}</p> -->
 </template>
 
 <script>
