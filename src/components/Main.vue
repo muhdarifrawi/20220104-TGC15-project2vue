@@ -1,8 +1,4 @@
 <template>
-  <div v-for="items in database" :key="items.itemName">
-    {{ items.itemName }}
-  </div>
-
   <div class="card m-3" style="width: 18rem" v-for="items in database" :key="items.itemName">
     <div class="card-body">
       <h5 class="card-title">{{items.itemName}}</h5>
