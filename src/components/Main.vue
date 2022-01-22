@@ -6,7 +6,9 @@
   <div class="card m-3" style="width: 18rem" v-for="items in database" :key="items.itemName">
     <div class="card-body">
       <h5 class="card-title">{{items.itemName}}</h5>
-      <h6 class="card-subtitle mb-2 text-muted"> Sumitted on {{items.date}} under {{items.category}} submitted by {{items.user}}</h6>
+      <h6 class="card-subtitle mb-2 text-muted"> Submitted on  {{formatDate(items.date)}}</h6>
+      <h6 class="card-subtitle mb-2 text-muted"> Under {{items.category}}</h6>
+      <h6 class="card-subtitle mb-2 text-muted"> Submitted by {{items.user}}</h6>
       <p class="card-text">
           {{items.itemDescription}}
       </p>
@@ -19,6 +21,7 @@
 
 <script>
 import axios from "axios";
+import moment from "moment";
 
 // need to enable CORS on the express side
 // npm install CORS? https://expressjs.com/en/resources/middleware/cors.html
@@ -27,6 +30,7 @@ export default {
   name: "Main",
   created: async function () {
     let response = await axios.get(process.env.VUE_APP_DEV_MONGO_URL);
+    console.log(response.data);
     this.database = response.data;
   },
   data: function () {
@@ -34,6 +38,15 @@ export default {
       database: "this is a test",
     };
   },
+  computed: {
+      formatDate(){
+        //moment(String(${dataDate})).format('YYYYMMDD')
+            return dataDate =>{
+              let formattedDate = moment(String(dataDate)).format('Do MMMM YYYY');
+              return formattedDate
+            }
+      }
+  }
 };
 </script>
 
