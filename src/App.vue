@@ -46,24 +46,28 @@
   </nav>
 
   <div>
-    <Main v-if="page === 'product-review'" />
+    <Main v-if="page === 'product-review'" v-on:delete-entry="onDeleteEntry"/>
     <AddListing v-if="page === 'product-entry'" />
+    <Deleting v-if="page === 'delete-entry'" v-bind:id="currentEntry"/>
   </div>
 </template>
 
 <script>
 import Main from "@/components/Main.vue";
 import AddListing from "@/components/AddListing.vue";
+import Deleting from "@/components/Deleting.vue";
 
 export default {
   name: "App",
   components: {
     Main,
     AddListing,
+    Deleting
   },
   data: function () {
     return {
       page: "product-entry",
+      currentEntry: "0"
     };
   },
   methods: {
@@ -73,6 +77,11 @@ export default {
     goProductEntry: function () {
       this.page = "product-entry";
     },
+    onDeleteEntry: function(_id){
+      console.log("onDeleteEntry triggered");
+      this.page = "delete-entry";
+      this.currentEntry = _id;
+    }
   },
 };
 </script>

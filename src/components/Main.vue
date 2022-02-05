@@ -8,7 +8,7 @@
       <p class="card-text">
           {{items.itemDescription}}
       </p>
-      <a href="#" class="btn btn-danger mx-1">Delete</a>
+      <a href="#" class="btn btn-danger mx-1" v-on:click="deletingEntry(items._id)">Delete</a>
       <a href="#" class="btn btn-warning mx-1">Edit</a>
     </div>
   </div>
@@ -31,7 +31,7 @@ export default {
   },
   data: function () {
     return {
-      database: "this is a test",
+      database: "No entry so far. Be the first to upload!"
     };
   },
   computed: {
@@ -42,6 +42,13 @@ export default {
               return formattedDate
             }
       }
+  },
+  methods:{
+    deletingEntry:function(_id){
+      console.log("Deleting entry triggered", _id)
+      this.$emit("delete-entry",_id);
+      // this.$emit("page","delete-entry")
+    }
   }
 };
 </script>
