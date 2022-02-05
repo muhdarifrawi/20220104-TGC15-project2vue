@@ -91,9 +91,9 @@ export default {
 
       console.log(date, user, itemName, category, itemDescription);
     },
-    processEdit: async function () {
+    processAdd: async function () {
       console.log("mongo url: " + process.env.VUE_APP_DEV_MONGO_URL);
-      let response = await axios.update(process.env.VUE_APP_DEV_MONGO_URL + "products", {
+      let response = await axios.post(process.env.VUE_APP_DEV_MONGO_URL + "products", {
         date:this.date,
         user:this.user,
         itemName:this.itemName,

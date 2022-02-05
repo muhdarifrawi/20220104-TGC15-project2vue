@@ -62,8 +62,8 @@
       <label for="item-description">Item Description</label>
     </div>
 
-    <button type="button" class="btn btn-primary" v-on:click="processAdd">
-      Submit
+    <button type="button" class="btn btn-warning" v-on:click="processEdit">
+      Edit
     </button>
   </div>
 </template>
@@ -97,20 +97,12 @@ export default {
     };
   },
   methods: {
-    newProduct: function () {
-      let date = this.date;
-      let user = this.user;
-      let itemName = this.itemName;
-      let category = this.category;
-      let itemDescription = this.itemDescription;
-
-      console.log(date, user, itemName, category, itemDescription);
-    },
-    processAdd: async function () {
-      console.log("mongo url: " + process.env.VUE_APP_DEV_MONGO_URL);
+    processEdit: async function () {
+      console.log("mongo url: " + process.env.VUE_APP_DEV_MONGO_URL + "products/" + this.id);
       let response = await axios.post(
-        process.env.VUE_APP_DEV_MONGO_URL + "products",
+        process.env.VUE_APP_DEV_MONGO_URL + "products/" + this.id,
         {
+          _id: this.id,
           date: this.date,
           user: this.user,
           itemName: this.itemName,
