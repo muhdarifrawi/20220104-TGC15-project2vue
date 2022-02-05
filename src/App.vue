@@ -46,9 +46,10 @@
   </nav>
 
   <div>
-    <Main v-if="page === 'product-review'" v-on:delete-entry="onDeleteEntry"/>
+    <Main v-if="page === 'product-review'" v-on:delete-entry="onDeleteEntry"  v-on:edit-entry="onEditEntry"/>
     <AddListing v-if="page === 'product-entry'" />
     <Deleting v-if="page === 'delete-entry'" v-bind:id="currentEntry" v-on:product-review="goProductReviews"/>
+    <Editing v-if="page === 'edit-entry'" v-bind:id="currentEntry"/>
   </div>
 </template>
 
@@ -56,13 +57,15 @@
 import Main from "@/components/Main.vue";
 import AddListing from "@/components/AddListing.vue";
 import Deleting from "@/components/Deleting.vue";
+import Editing from "@/components/Editing.vue";
 
 export default {
   name: "App",
   components: {
     Main,
     AddListing,
-    Deleting
+    Deleting,
+    Editing
   },
   data: function () {
     return {
@@ -80,6 +83,11 @@ export default {
     onDeleteEntry: function(_id){
       console.log("onDeleteEntry triggered");
       this.page = "delete-entry";
+      this.currentEntry = _id;
+    },
+    onEditEntry: function(_id){
+      console.log("onEditEntry triggered");
+      this.page = "edit-entry";
       this.currentEntry = _id;
     }
   },

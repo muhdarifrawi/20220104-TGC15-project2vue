@@ -9,7 +9,7 @@
           {{items.itemDescription}}
       </p>
       <a href="#" class="btn btn-danger mx-1" v-on:click="deletingEntry(items._id)">Delete</a>
-      <a href="#" class="btn btn-warning mx-1">Edit</a>
+      <a href="#" class="btn btn-warning mx-1" v-on:click="editingEntry(items._id)">Edit</a>
     </div>
   </div>
   <!-- <p>{{database}}</p> -->
@@ -45,9 +45,10 @@ export default {
   },
   methods:{
     deletingEntry:function(_id){
-      console.log("Deleting entry triggered", _id)
       this.$emit("delete-entry",_id);
-      // this.$emit("page","delete-entry")
+    },
+    editingEntry:function(_id){
+      this.$emit("edit-entry",_id)
     }
   }
 };

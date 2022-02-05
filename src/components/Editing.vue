@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Product Entry</h1>
+    <h1>Edit Product Info</h1>
     <div class="form-floating mb-2">
       <input
         type="date"
@@ -70,8 +70,23 @@
 
 <script>
 import axios from "axios";
+import moment from "moment";
+
 export default {
-  name: "AddListing",
+  name: "EditListing",
+  props: ["id"],
+  created: async function () {
+    console.log(this.id);
+    let response = await axios.get(
+      process.env.VUE_APP_DEV_MONGO_URL + "products/" + this.id
+    );
+    console.log(response.data);
+    this.date = moment(String(response.data.result.date)).format("YYYY-MM-DD");
+    this.user = response.data.result.user;
+    this.itemName = response.data.result.itemName;
+    this.category = response.data.result.category;
+    this.itemDescription = response.data.result.itemDescription;
+  },
   data: function () {
     return {
       date: "",
@@ -91,18 +106,22 @@ export default {
 
       console.log(date, user, itemName, category, itemDescription);
     },
-    processEdit: async function () {
+    processAdd: async function () {
       console.log("mongo url: " + process.env.VUE_APP_DEV_MONGO_URL);
-      let response = await axios.update(process.env.VUE_APP_DEV_MONGO_URL + "products", {
-        date:this.date,
-        user:this.user,
-        itemName:this.itemName,
-        category:this.category,
-        itemDescription:this.itemDescription
-      });
+      let response = await axios.post(
+        process.env.VUE_APP_DEV_MONGO_URL + "products",
+        {
+          date: this.date,
+          user: this.user,
+          itemName: this.itemName,
+          category: this.category,
+          itemDescription: this.itemDescription,
+        }
+      );
       console.log(response.data);
     },
   },
+  
 };
 </script>
 
