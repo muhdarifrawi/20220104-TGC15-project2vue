@@ -11,8 +11,8 @@
       <p class="card-text">
           {{database.result.itemDescription}}
       </p>
-      <a href="#" class="btn btn-danger mx-1" v-on:click="deletingEntry(database.result._id)">Delete</a>
-      <a href="#" class="btn btn-warning mx-1">Edit</a>
+      <a href="#" class="btn btn-danger mx-1" v-on:click="deleteEntry(database.result._id)">Confirm</a>
+      <a href="#" class="btn btn-outline-dark mx-1" v-on:click="cancel()">Cancel</a>
     </div>
   </div>
     {{ database }}
@@ -57,12 +57,15 @@ export default {
     deleteEntry: async function () {
       try {
         await axios.delete(
-          process.env.VUE_APP_DEV_MONGO_URL + "products/" + this.currentEntry
+          process.env.VUE_APP_DEV_MONGO_URL + "products/" + this.id
         );
       } finally {
-        this.$emit("page", "product-review");
+        this.$emit("product-review");
       }
     },
+    cancel:function(){
+      this.$emit("product-review");
+    }
   },
 };
 </script>

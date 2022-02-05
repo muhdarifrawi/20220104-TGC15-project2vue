@@ -48,7 +48,7 @@
   <div>
     <Main v-if="page === 'product-review'" v-on:delete-entry="onDeleteEntry"/>
     <AddListing v-if="page === 'product-entry'" />
-    <Deleting v-if="page === 'delete-entry'" v-bind:id="currentEntry"/>
+    <Deleting v-if="page === 'delete-entry'" v-bind:id="currentEntry" v-on:product-review="goProductReviews"/>
   </div>
 </template>
 
