@@ -62,7 +62,7 @@
       <label for="item-description">Item Description</label>
     </div>
 
-    <button type="button" class="btn btn-primary" v-on:click="processAdd">
+    <button type="button" class="btn btn-primary" v-on:click="checkForm">
       Submit
     </button>
   </div>
@@ -75,14 +75,37 @@ export default {
   emits:["errorStatus"],
   data: function () {
     return {
-      date: "",
-      user: "",
-      itemName: "",
-      category: [],
-      itemDescription: "",
+      date: null,
+      user: null,
+      itemName: null,
+      category: null,
+      itemDescription: null,
     };
   },
   methods: {
+    checkForm:function(){
+      this.$emit("clearError")
+      if(!this.date){
+        console.log("date e");
+        this.$emit("errorStatus","Empty date field")
+      }
+      if(!this.user){
+        console.log("user e");
+        this.$emit("errorStatus","Empty user field")
+      }
+      if(!this.itemName){
+        console.log("itemName e");
+        this.$emit("errorStatus","Empty item name field")
+      }
+      if(!this.category){
+        console.log("category e");
+        this.$emit("errorStatus","Empty category field")
+      }
+      if(!this.itemDescription){
+        console.log("itemDescription e");
+        this.$emit("errorStatus","Empty item description field")
+      }
+    },
     newProduct: function () {
       let date = this.date;
       let user = this.user;

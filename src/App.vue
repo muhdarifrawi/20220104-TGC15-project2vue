@@ -48,14 +48,14 @@
   <!-- error banner -->
   <div class="container">
     <div class="alert alert-danger my-3" role="alert" v-if="errors.length > 0">
-      Error: <span v-for="e in errors" v-bind:key="e">{{e}}</span>
+      Error: <span v-for="(e, index) in errors" v-bind:key="index">{{listErrors(index)}}</span>
     </div>
   </div>
   
 
   <div>
     <Main v-if="page === 'product-review'" v-on:delete-entry="onDeleteEntry"  v-on:edit-entry="onEditEntry"/>
-    <AddListing v-if="page === 'product-entry'" @errorStatus="showErrors"/>
+    <AddListing v-if="page === 'product-entry'" @errorStatus="showErrors" @clearError="resetErrorMsg"/>
     <Deleting v-if="page === 'delete-entry'" v-bind:id="currentEntry" v-on:product-review="goProductReviews"/>
     <Editing v-if="page === 'edit-entry'" v-bind:id="currentEntry"/>
   </div>
@@ -101,6 +101,28 @@ export default {
     },
     showErrors:function(error){
       this.errors.push(error);
+    },
+    // commas for errors in courtesy of: https://forum.vuejs.org/t/v-for-and-commas-best-technique/67823/2
+    listErrors:function(index){
+      if(index!==this.errors.length-1){
+       if(index>0){
+         return `${this.errors[index].toLowerCase()}, `;
+       }
+       else{
+         return `${this.errors[index]}, `;
+       }
+       
+     }else{
+       if(index>0){
+         return `${this.errors[index].toLowerCase()}.`;
+       }
+       else{
+         return `${this.errors[index]}.`;
+       }
+     }
+    },
+    resetErrorMsg: function(){
+      this.errors = [];
     }
   },
 };
