@@ -59,7 +59,14 @@ export default {
         await axios.delete(
           process.env.VUE_APP_DEV_MONGO_URL + "products/" + this.id
         );
-      } finally {
+      }
+      catch(e){
+        let errorStatus = e.request.status;
+        if(errorStatus == 404){
+          this.$emit("errorStatus","Network error (404)")
+        }
+      } 
+      finally {
         this.$emit("product-review");
       }
     },
