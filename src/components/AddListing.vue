@@ -1,14 +1,17 @@
 <template>
   <div class="container">
     <h1>Product Entry</h1>
+    <form class="form-floating needs-validation" novalidate>
     <div class="form-floating mb-2">
       <input
         type="date"
         name="entry-date"
         id="entry-date"
         class="form-control"
+        :class="{'is-invalid':dateEmpty}"
         placeholder="John Doe"
         v-model="date"
+        required
       />
       <label for="entry-date">Entry Date</label>
     </div>
@@ -19,8 +22,10 @@
         name="user"
         id="user"
         class="form-control"
+        :class="{'is-invalid':userEmpty}"
         placeholder="John Doe"
         v-model="user"
+        required
       />
       <label for="user">User</label>
     </div>
@@ -31,8 +36,10 @@
         name="item-name"
         id="item-name"
         class="form-control"
+        :class="{'is-invalid':itemNameEmpty}"
         placeholder="John Doe"
         v-model="itemName"
+        required
       />
       <label for="entry-date">Item Name</label>
     </div>
@@ -40,11 +47,13 @@
     <div class="form-floating mb-2">
       <select
         class="form-select"
+        :class="{'is-invalid':categoryEmpty}"
         id="category"
         aria-label="category label"
         v-model="category"
+        required
       >
-        <option selected>Choose a category</option>
+        <option value="">Choose a category</option>
         <option value="1">One</option>
         <option value="2">Two</option>
         <option value="3">Three</option>
@@ -55,9 +64,11 @@
     <div class="form-floating mb-2">
       <textarea
         class="form-control"
+        :class="{'is-invalid':itemDescriptionEmpty}"
         placeholder="Fill in description"
         id="item-description"
         v-model="itemDescription"
+        required
       ></textarea>
       <label for="item-description">Item Description</label>
     </div>
@@ -65,6 +76,7 @@
     <button type="button" class="btn btn-primary" v-on:click="checkForm">
       Submit
     </button>
+    </form>
   </div>
 </template>
 
@@ -78,31 +90,47 @@ export default {
       date: null,
       user: null,
       itemName: null,
-      category: null,
+      category: "",
       itemDescription: null,
+      dateEmpty: false,
+      userEmpty: false,
+      itemNameEmpty: false,
+      categoryEmpty: false,
+      itemDescriptionEmpty: false,
     };
   },
   methods: {
     checkForm:function(){
-      this.$emit("clearError")
+      this.$emit("clearError");
+      this.dateEmpty = false;
+      this.userEmpty = false;
+      this.itemNameEmpty = false;
+      this.categoryEmpty = false;
+      this.itemDescriptionEmpty = false;
+
       if(!this.date){
         console.log("date e");
+        this.dateEmpty = true;
         this.$emit("errorStatus","Empty date field")
       }
       if(!this.user){
         console.log("user e");
+        this.userEmpty = true;
         this.$emit("errorStatus","Empty user field")
       }
       if(!this.itemName){
         console.log("itemName e");
+        this.itemNameEmpty = true;
         this.$emit("errorStatus","Empty item name field")
       }
       if(!this.category){
         console.log("category e");
+        this.categoryEmpty = true;
         this.$emit("errorStatus","Empty category field")
       }
       if(!this.itemDescription){
         console.log("itemDescription e");
+        this.itemDescriptionEmpty = true;
         this.$emit("errorStatus","Empty item description field")
       }
     },
