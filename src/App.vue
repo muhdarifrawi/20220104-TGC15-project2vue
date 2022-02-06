@@ -45,9 +45,17 @@
     </div>
   </nav>
 
+  <!-- error banner -->
+  <div class="container">
+    <div class="alert alert-danger my-3" role="alert" v-if="errors.length > 0">
+      Error: <span v-for="e in errors" v-bind:key="e">{{e}}</span>
+    </div>
+  </div>
+  
+
   <div>
     <Main v-if="page === 'product-review'" v-on:delete-entry="onDeleteEntry"  v-on:edit-entry="onEditEntry"/>
-    <AddListing v-if="page === 'product-entry'" />
+    <AddListing v-if="page === 'product-entry'" @errorStatus="showErrors"/>
     <Deleting v-if="page === 'delete-entry'" v-bind:id="currentEntry" v-on:product-review="goProductReviews"/>
     <Editing v-if="page === 'edit-entry'" v-bind:id="currentEntry"/>
   </div>
@@ -70,7 +78,8 @@ export default {
   data: function () {
     return {
       page: "product-entry",
-      currentEntry: "0"
+      currentEntry: "0",
+      errors:[]
     };
   },
   methods: {
@@ -89,6 +98,9 @@ export default {
       console.log("onEditEntry triggered");
       this.page = "edit-entry";
       this.currentEntry = _id;
+    },
+    showErrors:function(error){
+      this.errors.push(error);
     }
   },
 };

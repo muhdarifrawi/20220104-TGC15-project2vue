@@ -72,6 +72,7 @@
 import axios from "axios";
 export default {
   name: "AddListing",
+  emits:["errorStatus"],
   data: function () {
     return {
       date: "",
@@ -92,15 +93,25 @@ export default {
       console.log(date, user, itemName, category, itemDescription);
     },
     processAdd: async function () {
-      console.log("mongo url: " + process.env.VUE_APP_DEV_MONGO_URL);
-      let response = await axios.post(process.env.VUE_APP_DEV_MONGO_URL + "products", {
-        date:this.date,
-        user:this.user,
-        itemName:this.itemName,
-        category:this.category,
-        itemDescription:this.itemDescription
-      });
-      console.log(response.data);
+      // console.log("mongo url: " + process.env.VUE_APP_DEV_MONGO_URL);
+      try {
+        let response = await axios.post(process.env.VUE_APP_DEV_MONGO_URL + "product/", {
+          date:this.date,
+          user:this.user,
+          itemName:this.itemName,
+          category:this.category,
+          itemDescription:this.itemDescription
+        });
+        console.log(response.data);
+      }
+      catch(e){
+        console.log(e.request.status);
+        let errorStatus = e.request.status;
+        if(errorStatus == 404){
+          this.$emit("errorStatus","Network error (404)")
+        }
+      }
+      
     },
   },
 };

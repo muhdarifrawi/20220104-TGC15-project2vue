@@ -89,17 +89,18 @@ export default {
   },
   data: function () {
     return {
-      date: "",
-      user: "",
-      itemName: "",
-      category: [],
-      itemDescription: "",
+      date: null,
+      user: null,
+      itemName: null,
+      category: null,
+      itemDescription: null,
     };
   },
   methods: {
     processEdit: async function () {
-      console.log("mongo url: " + process.env.VUE_APP_DEV_MONGO_URL + "products/" + this.id);
-      let response = await axios.post(
+      // console.log("mongo url: " + process.env.VUE_APP_DEV_MONGO_URL + "products/" + this.id);
+      try {
+        let response = await axios.post(
         process.env.VUE_APP_DEV_MONGO_URL + "products/" + this.id,
         {
           _id: this.id,
@@ -111,6 +112,11 @@ export default {
         }
       );
       console.log(response.data);
+      }
+      catch(e){
+        console.log(e);
+      }
+      
     },
   },
   
