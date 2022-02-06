@@ -54,9 +54,12 @@
         required
       >
         <option value="">Choose a category</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+        <option value="brakes">Brakes</option>
+        <option value="pedals">Pedals</option>
+        <option value="body">Body</option>
+        <option value="seats">Seats</option>
+        <option value="handles">Handles</option>
+        <option value="tires">Tires</option>
       </select>
       <label for="floatingSelect">Category</label>
     </div>
@@ -167,8 +170,7 @@ export default {
           this.$emit("errorStatus","Network error (404)")
         }
       }
-      
-    },
+    }
   },
 };
 </script>
