@@ -60,7 +60,7 @@
     <Main v-if="page === 'product-review'" v-on:delete-entry="onDeleteEntry"  v-on:edit-entry="onEditEntry"/>
     <AddListing v-if="page === 'product-entry'" @errorStatus="showErrors" @clearError="resetErrorMsg" @submitSuccess="showSuccess"/>
     <Deleting v-if="page === 'delete-entry'" v-bind:id="currentEntry" v-on:product-review="goProductReviews"/>
-    <Editing v-if="page === 'edit-entry'" v-bind:id="currentEntry"/>
+    <Editing v-if="page === 'edit-entry'" v-bind:id="currentEntry" v-on:product-review="goProductReviews"/>
   </div>
 </template>
 

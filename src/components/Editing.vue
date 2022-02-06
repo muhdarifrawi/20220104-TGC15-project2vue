@@ -68,6 +68,7 @@
     <button type="button" class="btn btn-warning" v-on:click="checkForm">
       Edit
     </button>
+    <a href="#" class="btn btn-outline-dark mx-1" v-on:click="cancel()">Cancel</a>
   </div>
 </template>
 
@@ -158,6 +159,9 @@ export default {
         console.log(e);
       }
       
+    },
+    cancel:function(){
+      this.$emit("product-review");
     },
   },
   
