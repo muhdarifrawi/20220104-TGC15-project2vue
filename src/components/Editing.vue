@@ -44,10 +44,13 @@
         aria-label="category label"
         v-model="category"
       >
-        <option selected>Choose a category</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+        <option value="">Choose a category</option>
+        <option value="brakes">Brakes</option>
+        <option value="pedals">Pedals</option>
+        <option value="body">Body</option>
+        <option value="seats">Seats</option>
+        <option value="handles">Handles</option>
+        <option value="tires">Tires</option>
       </select>
       <label for="floatingSelect">Category</label>
     </div>
@@ -62,7 +65,7 @@
       <label for="item-description">Item Description</label>
     </div>
 
-    <button type="button" class="btn btn-warning" v-on:click="processEdit">
+    <button type="button" class="btn btn-warning" v-on:click="checkForm">
       Edit
     </button>
   </div>
@@ -89,14 +92,52 @@ export default {
   },
   data: function () {
     return {
-      date: null,
-      user: null,
-      itemName: null,
-      category: null,
-      itemDescription: null,
+      date: "",
+      user: "",
+      itemName: "",
+      category: "",
+      itemDescription: "",
     };
   },
   methods: {
+    checkForm:function(){
+      this.$emit("clearError");
+      this.dateEmpty = false;
+      this.userEmpty = false;
+      this.itemNameEmpty = false;
+      this.categoryEmpty = false;
+      this.itemDescriptionEmpty = false;
+
+      if(!this.date){
+        console.log("date e");
+        this.dateEmpty = true;
+        this.$emit("errorStatus","Empty date field")
+      }
+      if(!this.user){
+        console.log("user e");
+        this.userEmpty = true;
+        this.$emit("errorStatus","Empty user field")
+      }
+      if(!this.itemName){
+        console.log("itemName e");
+        this.itemNameEmpty = true;
+        this.$emit("errorStatus","Empty item name field")
+      }
+      if(!this.category){
+        console.log("category e");
+        this.categoryEmpty = true;
+        this.$emit("errorStatus","Empty category field")
+      }
+      if(!this.itemDescription){
+        console.log("itemDescription e");
+        this.itemDescriptionEmpty = true;
+        this.$emit("errorStatus","Empty item description field")
+      }
+      if(!this.itemDescriptionEmpty && !this.categoryEmpty && !this.itemNameEmpty && !this.userEmpty && !this.dateEmpty){
+        console.log("All filled ");
+        this.processEdit();
+      }
+    },
     processEdit: async function () {
       // console.log("mongo url: " + process.env.VUE_APP_DEV_MONGO_URL + "products/" + this.id);
       try {
