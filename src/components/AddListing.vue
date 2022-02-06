@@ -84,7 +84,7 @@
 import axios from "axios";
 export default {
   name: "AddListing",
-  emits:["errorStatus"],
+  emits:["errorStatus","submitSuccess"],
   data: function () {
     return {
       date: null,
@@ -133,6 +133,10 @@ export default {
         this.itemDescriptionEmpty = true;
         this.$emit("errorStatus","Empty item description field")
       }
+      if(!this.itemDescriptionEmpty && !this.categoryEmpty && !this.itemNameEmpty && !this.userEmpty && !this.dateEmpty){
+        console.log("All filled ");
+        this.processAdd();
+      }
     },
     newProduct: function () {
       let date = this.date;
@@ -146,7 +150,7 @@ export default {
     processAdd: async function () {
       // console.log("mongo url: " + process.env.VUE_APP_DEV_MONGO_URL);
       try {
-        let response = await axios.post(process.env.VUE_APP_DEV_MONGO_URL + "product/", {
+        let response = await axios.post(process.env.VUE_APP_DEV_MONGO_URL + "products", {
           date:this.date,
           user:this.user,
           itemName:this.itemName,
@@ -154,6 +158,7 @@ export default {
           itemDescription:this.itemDescription
         });
         console.log(response.data);
+        this.$emit("submitSuccess");
       }
       catch(e){
         console.log(e.request.status);

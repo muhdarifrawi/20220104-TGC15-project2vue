@@ -50,12 +50,15 @@
     <div class="alert alert-danger my-3" role="alert" v-if="errors.length > 0">
       Error: <span v-for="(e, index) in errors" v-bind:key="index">{{listErrors(index)}}</span>
     </div>
+    <div class="alert alert-success my-3" role="alert" v-if="isSuccess">
+      Form submitted successfully! :)
+    </div>
   </div>
   
 
   <div>
     <Main v-if="page === 'product-review'" v-on:delete-entry="onDeleteEntry"  v-on:edit-entry="onEditEntry"/>
-    <AddListing v-if="page === 'product-entry'" @errorStatus="showErrors" @clearError="resetErrorMsg"/>
+    <AddListing v-if="page === 'product-entry'" @errorStatus="showErrors" @clearError="resetErrorMsg" @submitSuccess="showSuccess"/>
     <Deleting v-if="page === 'delete-entry'" v-bind:id="currentEntry" v-on:product-review="goProductReviews"/>
     <Editing v-if="page === 'edit-entry'" v-bind:id="currentEntry"/>
   </div>
@@ -79,7 +82,8 @@ export default {
     return {
       page: "product-entry",
       currentEntry: "0",
-      errors:[]
+      errors:[],
+      isSuccess:false
     };
   },
   methods: {
@@ -101,6 +105,7 @@ export default {
     },
     showErrors:function(error){
       this.errors.push(error);
+      setTimeout(()=> this.errors = [],3000);
     },
     // commas for errors in courtesy of: https://forum.vuejs.org/t/v-for-and-commas-best-technique/67823/2
     listErrors:function(index){
@@ -123,6 +128,10 @@ export default {
     },
     resetErrorMsg: function(){
       this.errors = [];
+    },
+    showSuccess:function(){
+      this.isSuccess = true;
+      setTimeout(()=> this.isSuccess = false,3000)
     }
   },
 };
