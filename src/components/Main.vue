@@ -1,6 +1,5 @@
 <template>
   <div class="container my-3">
-
     <div class="form-floating mb-3">
       <input
         type="text"
@@ -32,88 +31,47 @@
     <div class="row d-flex justify-content-around">
       <div
         class="card m-3"
-        style="width: 18rem"
+        style="width: 20rem"
         v-for="items in database"
         :key="items.itemName"
       >
         <div class="card-body">
           <h5 class="card-title">{{ items.itemName }}</h5>
-          <div
-            class="accordion accordion-flush"
-            :id="`accordionFlush-${items._id}-1`"
+          <h6 class="grayed-text mt-2 mb-0 text-muted">
+            Submitted on {{ formatDate(items.date) }}
+          </h6>
+          <h6 class="grayed-text mt-0 text-muted">
+            under <span class="text-capitalize">{{ items.category }}</span> by
+            {{ items.user }}
+          </h6>
+          <p class="card-text">
+            {{ items.itemDescription }}
+          </p>
+
+          <button
+            class="btn btn-outline-dark"
+            type="button"
+            data-bs-toggle="collapse"
+            :data-bs-target="`#options-${items._id}`"
+            aria-expanded="false"
+            :aria-controls="`options-${items._id}`"
           >
-            <div class="accordion-item my-1">
-              <h6 class="accordion-header" :id="`flush-heading-${items._id}-1`">
-                <button
-                  class="accordion-button"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  :data-bs-target="`#flush-collapse-${items._id}-1`"
-                  aria-expanded="false"
-                  :aria-controls="`flush-collapse-${items._id}-1`"
-                >
-                  Description
-                </button>
-              </h6>
-              <div
-                :id="`flush-collapse-${items._id}-1`"
-                class="accordion-collapse collapse show"
-                :aria-labelledby="`flush-heading-${items._id}-1`"
-                :data-bs-parent="`#accordionFlush-${items._id}-1`"
+            Options
+          </button>
+          <div class="collapse" :id="`options-${items._id}`">
+            <div class="card card-body border-light my-2 d-grid gap-2 d-md-block">
+              <a
+                href="#"
+                class="btn btn-danger mx-1"
+                v-on:click="deletingEntry(items._id)"
+                >Delete</a
               >
-                <div class="accordion-body">
-                  {{ items.itemDescription }}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="accordion accordion-flush"
-            :id="`accordionFlush-${items._id}-2`"
-          >
-            <div class="accordion-item my-1">
-              <h6 class="accordion-header" :id="`flush-heading-${items._id}-2`">
-                <button
-                  class="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  :data-bs-target="`#flush-collapse-${items._id}-2`"
-                  aria-expanded="false"
-                  :aria-controls="`flush-collapse-${items._id}-2`"
-                >
-                  More..
-                </button>
-              </h6>
-              <div
-                :id="`flush-collapse-${items._id}-2`"
-                class="accordion-collapse collapse"
-                :aria-labelledby="`flush-heading-${items._id}-2`"
-                :data-bs-parent="`#accordionFlush-${items._id}-2`"
+              <a
+                href="#"
+                class="btn btn-warning mx-1"
+                v-on:click="editingEntry(items._id)"
+                >Edit</a
               >
-                <div class="accordion-body">
-                  <h6 class="card-subtitle mb-2 text-muted">
-                    Submitted on {{ formatDate(items.date) }}
-                  </h6>
-                  <h6 class="card-subtitle mb-2 text-muted">
-                    Categorised under {{ items.category }}
-                  </h6>
-                  <h6 class="card-subtitle mb-2 text-muted">
-                    Submitted by {{ items.user }}
-                  </h6>
-                  <a
-                    href="#"
-                    class="btn btn-danger mx-1"
-                    v-on:click="deletingEntry(items._id)"
-                    >Delete</a
-                  >
-                  <a
-                    href="#"
-                    class="btn btn-warning mx-1"
-                    v-on:click="editingEntry(items._id)"
-                    >Edit</a
-                  >
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -141,7 +99,7 @@ export default {
     return {
       databaseActual: "",
       database: [],
-      searchMode:"title"
+      searchMode: "title",
     };
   },
   computed: {
@@ -160,26 +118,29 @@ export default {
     editingEntry: function (_id) {
       this.$emit("edit-entry", _id);
     },
-    searchEntry: function(){
+    searchEntry: function () {
       // console.log(this.database[0]["itemName"]);
       this.database = [];
-      let searchType = ""
+      let searchType = "";
       // this.database.push(this.databaseActual[0])
-      if(this.searchMode == "title"){
-        searchType = "itemName"
-      }
-      else if(this.searchMode == "category"){
-        searchType = "category"
-      }
-      else if(this.searchMode == "user"){
-        searchType = "user"
+      if (this.searchMode == "title") {
+        searchType = "itemName";
+      } else if (this.searchMode == "category") {
+        searchType = "category";
+      } else if (this.searchMode == "user") {
+        searchType = "user";
       }
 
-      this.database = this.databaseActual.filter(data => data[searchType].toLowerCase().includes(this.searchInput.toLowerCase()));
-    }
+      this.database = this.databaseActual.filter((data) =>
+        data[searchType].toLowerCase().includes(this.searchInput.toLowerCase())
+      );
+    },
   },
 };
 </script>
 
 <style>
+.grayed-text {
+  font-size: 10pt;
+}
 </style>
