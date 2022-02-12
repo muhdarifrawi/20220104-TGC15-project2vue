@@ -18,6 +18,7 @@
         class="form-select"
         id="search-by"
         aria-label="search-by label"
+        v-model="searchMode"
       >
         <option value="title" selected>Item Name</option>
         <option value="category">Category</option>
@@ -140,6 +141,7 @@ export default {
     return {
       databaseActual: "",
       database: [],
+      searchMode:"title"
     };
   },
   computed: {
@@ -160,11 +162,20 @@ export default {
     },
     searchEntry: function(){
       // console.log(this.database[0]["itemName"]);
-      console.log(this.searchInput);
-      console.log(this.databaseActual["itemName"])
       this.database = [];
+      let searchType = ""
       // this.database.push(this.databaseActual[0])
-      this.database = this.databaseActual.filter(data => data["itemName"].toLowerCase().includes(this.searchInput.toLowerCase()));
+      if(this.searchMode == "title"){
+        searchType = "itemName"
+      }
+      else if(this.searchMode == "category"){
+        searchType = "category"
+      }
+      else if(this.searchMode == "user"){
+        searchType = "user"
+      }
+
+      this.database = this.databaseActual.filter(data => data[searchType].toLowerCase().includes(this.searchInput.toLowerCase()));
     }
   },
 };
