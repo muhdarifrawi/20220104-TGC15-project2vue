@@ -134,6 +134,7 @@ export default {
     let response = await axios.get(process.env.VUE_APP_DEV_MONGO_URL);
     console.log(response.data);
     this.databaseActual = response.data;
+    this.database = this.databaseActual;
   },
   data: function () {
     return {
@@ -160,7 +161,10 @@ export default {
     searchEntry: function(){
       // console.log(this.database[0]["itemName"]);
       console.log(this.searchInput);
-      this.database.push(this.databaseActual[0])
+      console.log(this.databaseActual["itemName"])
+      this.database = [];
+      // this.database.push(this.databaseActual[0])
+      this.database = this.databaseActual.filter(data => data["itemName"].toLowerCase().includes(this.searchInput.toLowerCase()));
     }
   },
 };
