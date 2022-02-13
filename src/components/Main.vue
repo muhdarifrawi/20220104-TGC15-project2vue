@@ -36,8 +36,8 @@
             <input
               class="form-check-input"
               type="checkbox"
-              value=""
               id="cat-body"
+              v-model="catBody"
             />
             <label class="form-check-label" for="cat-body"> Body </label>
           </div>
@@ -46,8 +46,8 @@
             <input
               class="form-check-input"
               type="checkbox"
-              value=""
               id="cat-brakes"
+              v-model="catBrakes"
             />
             <label class="form-check-label" for="cat-brakes"> Brakes </label>
           </div>
@@ -56,8 +56,8 @@
             <input
               class="form-check-input"
               type="checkbox"
-              value=""
               id="cat-handles"
+              v-model="catHandles"
             />
             <label class="form-check-label" for="cat-handles"> Handles </label>
           </div>
@@ -66,8 +66,8 @@
             <input
               class="form-check-input"
               type="checkbox"
-              value=""
               id="cat-pedals"
+              v-model="catPedals"
             />
             <label class="form-check-label" for="cat-pedals"> Pedals </label>
           </div>
@@ -76,8 +76,8 @@
             <input
               class="form-check-input"
               type="checkbox"
-              value=""
               id="cat-seats"
+              v-model="catSeats"
             />
             <label class="form-check-label" for="cat-seats"> Seats </label>
           </div>
@@ -86,8 +86,8 @@
             <input
               class="form-check-input"
               type="checkbox"
-              value=""
               id="cat-tires"
+              v-model="catTires"
             />
             <label class="form-check-label" for="cat-tires"> Tires </label>
           </div>
@@ -177,6 +177,12 @@ export default {
       databaseActual: "",
       database: [],
       searchMode: "title",
+      catBody:false,
+      catBrakes:false,
+      catHandles:false,
+      catPedals:false,
+      catSeats:false,
+      catTires:false
     };
   },
   computed: {
